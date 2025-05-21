@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Webduino Blockly App</title>
+  <script src="https://blocklypro.webduino.io/node_modules/jquery/dist/jquery.min.js?rev=2f6b11a7e914718e0290410e85366fe9"></script>
+  <script src="https://blocklypro.webduino.io/dist/lib/webduino-all-0.4.20.min.js?rev=4426739c00d85325cb2d3d701fa50666"></script>
+  <script src="https://blocklypro.webduino.io/dist/webduino-blockly.min.js?rev=a58c17a279091d8dc64355122211c460"></script>
+  <script src="https://blocklypro.webduino.io/dist/lib/firebase.min.js?rev=c0bfd493efd477d098a4ae9e92b13880"></script>
+  <script src="https://blocklypro.webduino.io/dist/lib/runtime.min.js?rev=683a69503433786202911b4d9f766100"></script>
+  <meta charset="UTF-8">
+  <title>LED 控制頁面</title>
+  <script>
+    // 模擬 LED 控制對象
+    const led = {
+      on: () => {
+        console.log("LED 已開啟");
+        document.getElementById("led-status").textContent = "燈狀態：開";
+      },
+      off: () => {
+        console.log("LED 已關閉");
+        document.getElementById("led-status").textContent = "燈狀態：關";
+      }
+    };
+
+    // 取得網址參數
+    function getQueryParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        name: params.get("name") || "訪客",
+        light: params.get("light")
+      };
+    }
+
+    // 初始化頁面
+    function init() {
+      const { name, light } = getQueryParams();
+      document.getElementById("welcome").textContent = `歡迎，${name}！`;
+
+      if (light === "on") {
+        led.on();
+      } else if (light === "off") {
+        led.off();
+      }
+    }
+  </script>
+  <script>
+         function toggleLight(light)
+            if(status==='on'){
+                led.on();
+            }else if (status==='off'){
+                led.off();
+            }
+            
+  </script>
+   
+
+
+
+</head>
+
+<body>
+    <h1 id="welcome">歡迎！</h1>
+    <p id="led-status">燈狀態：未知</p>
+    <button onclick="led.on()">開燈</button>
+    <button onclick="led.off()">關燈</button>
+    <script>
+        const urlparams = new URLSearchParams(window.location.search);
+        const name = urlparams.get('name');
+        const light = urlparams.get('light');
+        document.getElementById('name').textContent=name;
+        toggleLight(light);
+    </script>
+</body>
+<script>var led;
+
+
+    boardReady({board: 'Smart', device: 'YgxM2', transport: 'mqtt'}, function (board) {
+      board.samplingInterval = 50;
+      led = getLed(board, 5);
+      toggleLight(light);
+    });
+    </script>
